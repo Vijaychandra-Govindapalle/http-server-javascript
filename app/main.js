@@ -16,12 +16,12 @@ console.log("Logs from your program will appear here!");
         userAgent = request.split("\r\n")[2].split("User-Agent: ")[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
-       else if(request.split(" ")[0].startsWith('Post')){
+       else if(request.split(" ")[0].startsWith('P')){
         const directory = process.argv[3]
         const fileName = path.split("/files/")[1];
         const requestBody = request.split('\r\n\r\n')[1];
         const fileContent = requestBody.toString();
-        fs.mkdirSync((directory/fileName),(error)=>{
+        fs.mkdirSync((`${directory}/${fileName}`),(error)=>{
             if(error){
                 console.log("error")
             }
@@ -29,10 +29,10 @@ console.log("Logs from your program will appear here!");
                 console.log("Directory successfully created")
             }
         });
-        fs.writeFileSync(directory/fileName, fileContent);
+        fs.writeFileSync(`${directory}/${fileName}`, fileContent);
         socket.write("HTTP/1.1 201 OK\r\n\r\n")
 
-   }
+      }
        else if(path.startsWith('/files')){ 
          const directory = process.argv[3]
          const fileName = path.split("/files/")[1];
