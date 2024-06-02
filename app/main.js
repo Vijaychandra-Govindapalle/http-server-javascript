@@ -9,7 +9,7 @@ const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         const request = data.toString();
         const requestLine = request.split("\r\n")[0];
-        const [method, requestPath] = requestLine.split(" ");
+        const requestPath = requestLine.split(" ");
 
         if (requestPath.startsWith('/echo/')) {
             const content = requestPath.split('/echo/')[1];
@@ -39,7 +39,6 @@ const server = net.createServer((socket) => {
             socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
         }
 
-        // End the socket to indicate the response is fully sent
         socket.end();
     });
 
