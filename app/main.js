@@ -17,7 +17,7 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
        else if(request.split(" ")[0].startsWith('P')){
-        const directory = process.argv[3]
+        const directory = path.split("/files")[0]
         const fileName = path.split("/files/")[1];
         const requestBody = request.split('\r\n\r\n')[1];
         const fileContent = requestBody.toString();
