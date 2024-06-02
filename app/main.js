@@ -16,6 +16,23 @@ console.log("Logs from your program will appear here!");
         userAgent = request.split("\r\n")[2].split("User-Agent: ")[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
+       else if(request.split(" ")[0].startsWith('Post')){
+        const directory = process.argv[3]
+        const fileName = path.split("/files/")[1];
+        const requestBody = request.split('\r\n\r\n')[1];
+        const fileContent = requestBody.toString();
+        fs.mkdirSync((directory/fileName),(error)=>{
+            if(error){
+                console.log("error")
+            }
+            else{
+                console.log("Directory successfully created")
+            }
+        });
+        fs.writeFileSync(directory/fileName, fileContent);
+        socket.write("HTTP/1.1 201 OK\r\n\r\n")
+
+   }
        else if(path.startsWith('/files')){ 
          const directory = process.argv[3]
          const fileName = path.split("/files/")[1];
@@ -26,23 +43,6 @@ console.log("Logs from your program will appear here!");
             else{ 
                 socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
             }    
-       }
-       else if(request.split(" ")[0].startsWith('Post')){
-            const directory = process.argv[3]
-            const fileName = path.split("/files/")[1];
-            const requestBody = request.split('\r\n\r\n')[1];
-            const fileContent = requestBody.toString();
-            fs.mkdirSync((directory/fileName),(error)=>{
-                if(error){
-                    console.log("error")
-                }
-                else{
-                    console.log("Directory successfully created")
-                }
-            });
-            fs.writeFileSync(directory/fileName, fileContent);
-            socket.write("HTTP/1.1 201 OK\r\n\r\n")
-
        }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
