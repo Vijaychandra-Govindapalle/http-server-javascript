@@ -11,7 +11,7 @@ console.log("Logs from your program will appear here!");
      //  const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
      //  socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
        if (path.includes('/echo')){
-          const responeBody = path[1].split("/echo/")[1]
+          const responeBody = path.split("/echo/")[1]
           socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${responeBody.length()}\r\n\r\n${responeBody}`)
        }
 
