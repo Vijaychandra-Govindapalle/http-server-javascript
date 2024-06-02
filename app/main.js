@@ -15,8 +15,8 @@ console.log("Logs from your program will appear here!");
         userAgent = data.toString().split("\r\n")[2].split("User-Agent: ")[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
-       else if(path.startsWith('/file')){
-         const fileFullPath = path
+       else if(path.startsWith('/files')){
+         const fileFullPath = path;
          const directory = path.split("/file")[0];
          const fileName = path.split("/file")[1];
         if(fs.existsSync(fileFullPath)){
