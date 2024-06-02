@@ -13,15 +13,15 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
        }
        else if(path.startsWith('/user-agent')){
-        responseBody = data.toString().split(" ")[7];
-        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${responseBody.length}\r\n\r\n${responseBody}`)
+        userAgent = data.toString().split("\r\n")[2].split("User-Agent: ")[1];
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
        socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
        }
 
-    })
+    });
     socket.on("close", () => {
     socket.end();
     server.close();
