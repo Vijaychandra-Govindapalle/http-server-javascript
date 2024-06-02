@@ -1,4 +1,3 @@
-const { request, ClientRequest } = require("http");
 const net = require("net");
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -15,6 +14,10 @@ console.log("Logs from your program will appear here!");
        else if(path.startsWith('/user-agent')){
         userAgent = data.toString().split("\r\n")[2].split("User-Agent: ")[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
+       }
+       else if(path.startsWith('/file')){
+        file = path.split('/file/')[1];
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file.content}`)
        }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
