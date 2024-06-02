@@ -8,11 +8,13 @@ console.log("Logs from your program will appear here!");
  const server = net.createServer((socket) => {
     socket.on("data",(data) =>{
        const path = data.toString().split(" ")[1];
-     //  const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
-     //  socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
        if (path.startsWith('/echo')){
         const content = path.split('/echo/')[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
+       }
+       else{
+       const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
+       socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
        }
 
     })
