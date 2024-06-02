@@ -16,7 +16,7 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
        else if(path.startsWith('/file')){ 
-         const directory = path.split("files")[0];
+         const directory = process.argv[3]
          const fileName = path.split("/files/")[1];
         if(fs.existsSync(`${directory}/${fileName}`)){
            const fileContent = fs.readFileSync(`${directory}/${fileName}`).toString();
