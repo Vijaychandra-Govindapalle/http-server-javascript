@@ -16,11 +16,12 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
        else if(path.startsWith('/file')){
+         const fileFullPath = path
          const directory = path.split("/file")[0];
          const fileName = path.split("/file")[1];
-        if(fs.existsSync(`${directory}${fileName}`)){
-           const fileContent = fs.readFileSync(`${directory}${fileName}`).toString();
-           socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent.content}`);
+        if(fs.existsSync(fileFullPath)){
+           const fileContent = fs.readFileSync(fileFullPath).toString();
+           socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent}`);
            
         }
         else{
