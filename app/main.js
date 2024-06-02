@@ -13,7 +13,7 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
        }
        else if(path.startsWith('/user-agent')){
-        responseBody = data.toString().split(" ")[6];
+        responseBody = data.toString().split(" ")[7];
         
        }
        else {
