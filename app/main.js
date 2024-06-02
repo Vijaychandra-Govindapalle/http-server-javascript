@@ -23,7 +23,7 @@ console.log("Logs from your program will appear here!");
            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent}`); 
         }
         else{ 
-            socket.write("HTTP/1.1 404 NOT Found\r\n\r\n"); 
+            socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
         }
            
        }
