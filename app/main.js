@@ -14,7 +14,7 @@ console.log("Logs from your program will appear here!");
        }
        else if(path.startsWith('/user-agent')){
         responseBody = data.toString().split(" ")[7];
-        
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${responseBody.length}\r\n\r\n${responseBody}`)
        }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
