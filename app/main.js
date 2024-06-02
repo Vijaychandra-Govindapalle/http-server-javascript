@@ -29,12 +29,11 @@ console.log("Logs from your program will appear here!");
            
        }
        else {
-       const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
+      // const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
        //socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
        //socket.end()
        }
-
-      socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
+       socket.end()
       
 
     });
