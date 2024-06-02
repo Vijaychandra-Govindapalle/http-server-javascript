@@ -21,8 +21,8 @@ console.log("Logs from your program will appear here!");
         if(fs.existsSync(`${directory}/${fileName}`)){
            const fileContent = fs.readFileSync(`${directory}/${fileName}`).toString();
            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent}`);  
-        }
-           socket.write("HTTP/1.1 404 NOT FOUND\r\n\r\n");
+        }else{ socket.write("HTTP/1.1 404 NOT FOUND\r\n\r\n"); }
+           
        }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
