@@ -1,5 +1,5 @@
 const net = require("net");
-
+const fs = require("fs")
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
 
@@ -16,12 +16,15 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
        else if(path.startsWith('/file')){
-        if(path.split('/file')[1] == " "){
-           socket.write('HTTP/1.1 404 Not Found\r\n'); 
+         const directory = path.split("/file")[0];
+         const fileName = path.split("/file")[1];
+        if(fs.existsSync(`${directory}${fileName}`)){
+           const fileContent = fs.readFileSync(`${directory}${fileName}`).toString();
+           socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent.content}`);
+           
         }
         else{
-        const file = path.split('/file/')[1];
-        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file.content}`);
+            socket.write('HTTP/1.1 404 Not Found\r\n'); 
         }
        }
        else {
