@@ -18,14 +18,14 @@ console.log("Logs from your program will appear here!");
        else if(path.startsWith('/files')){ 
          const directory = process.argv[3]
          const fileName = path.split("/files/")[1];
-        if(fs.existsSync(`${directory}/${fileName}`)){
-           const fileContent = fs.readFileSync(`${directory}/${fileName}`).toString();
-           socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent}\r\n`); 
-        }
-        else{ 
-            socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
-            
-        }
+            if(fs.existsSync(`${directory}/${fileName}`)){
+            const fileContent = fs.readFileSync(`${directory}/${fileName}`).toString();
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent}\r\n`); 
+            }
+            else{ 
+                socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
+                
+            }
            
        }
        else {
