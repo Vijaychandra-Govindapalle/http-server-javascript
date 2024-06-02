@@ -10,30 +10,28 @@ console.log("Logs from your program will appear here!");
        if (path.startsWith('/echo')){
         const content = path.split('/echo/')[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
-        socket.end()
        }
        else if(path.startsWith('/user-agent')){
         userAgent = data.toString().split("\r\n")[2].split("User-Agent: ")[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
-        socket.end()
        }
-       else if (path.startsWith('/files')) {
-        const directory = process.argv[3];
-        const fileName = path.split("/files/")[1];
-        const fullFilePath = path.join(directory, fileName);
-
-        if (fs.existsSync(fullFilePath)) {
-            const fileContent = fs.readFileSync(fullFilePath);
-            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n`);
-            socket.write(fileContent);
-        } else {
-            socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
+       else if(path.startsWith('/files')){ 
+         const directory = process.argv[3]
+         const fileName = path.split("/files/")[1];
+        if(fs.existsSync(`${directory}/${fileName}`)){
+           const fileContent = fs.readFileSync(`${directory}/${fileName}`).toString();
+           socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${fileContent.length}\r\n\r\n${fileContent}`); 
         }
-    }
+        else{ 
+            socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
+            
+        }
+           
+       }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
        //socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
-       socket.end()
+       //socket.end()
        }
 
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); 
