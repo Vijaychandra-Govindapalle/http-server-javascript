@@ -16,8 +16,11 @@ console.log("Logs from your program will appear here!");
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
        }
        else if(path.startsWith('/file')){
+        if(path.split('/file')[1] == " "){
+           socket.write('HTTP/1.1 404 Not Found\r\n'); 
+        }
         file = path.split('/file/')[1];
-        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file.content}`)
+        socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file.content}`);
        }
        else {
        const responseStatus = path === "/" ? "200 OK" : "404 Not Found";
