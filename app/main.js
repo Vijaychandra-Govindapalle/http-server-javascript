@@ -21,7 +21,8 @@ console.log("Logs from your program will appear here!");
         const fileName = path.split("/files/")[1].toString();
         const requestBody = request.split('\r\n\r\n')[1];
         const fileContent = requestBody.toString();
-        fs.mkdirSync((`${directory}/${fileName}`),(error)=>{
+        const file = fileName.txt
+        fs.mkdirSync ((`${directory}/${file}`),(error)=>{
             if(error){
                 console.log("error")
             }
@@ -29,7 +30,7 @@ console.log("Logs from your program will appear here!");
                 console.log("Directory successfully created")
             }
         });
-        fs.writeFileSync(`${directory}/${fileName}`, fileContent,"utf-8");
+        fs.writeFileSync(`${directory}/${file}`, fileContent,"utf-8");
         socket.write("HTTP/1.1 201 OK\r\n\r\n")
 
       }
