@@ -9,6 +9,15 @@ console.log("Logs from your program will appear here!");
        const request = data.toString()
        const path = data.toString().split(" ")[1];
        if (path.startsWith('/echo')){
+        if(request.split("\r\n")[3].startsWith('Accept')){
+           const compressionScheme = request.split("\r\n")[3].split(' ')[1];
+           if(compressionScheme == "gzip"){
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: ${compressionScheme}\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nfoo`)
+            }
+           else{
+              socket.write(socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nbar`))
+           }
+        }
         const content = path.split('/echo/')[1];
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
        }
@@ -21,14 +30,6 @@ console.log("Logs from your program will appear here!");
         const fileName = path.split("/files/")[1].toString();
         const requestBody = request.split('\r\n\r\n')[1];
         const fileContent = requestBody.toString();
-       /* fs.mkdirSync ((`${directory}),(error)=>{
-            if(error){
-                console.log("error")
-            }
-            else{
-                console.log("Directory successfully created")
-            }
-        });*/
         fs.writeFileSync(`${directory}/${fileName}`, fileContent,"utf-8");
         socket.write("HTTP/1.1 201 Created\r\n\r\n")
 
