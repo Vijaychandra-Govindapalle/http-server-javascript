@@ -66,7 +66,7 @@ const server = net.createServer((socket) => {
         socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
       }
     } else {
-      const responseStatus = path.startsWith("/") ? "200 OK" : "404 Not Found";
+      const responseStatus = path === ("/") ? "200 OK" : "404 Not Found";
       socket.write(`HTTP/1.1 ${responseStatus}\r\n\r\n`);
     }
     socket.end();
