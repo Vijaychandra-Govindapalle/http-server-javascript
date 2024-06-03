@@ -15,17 +15,15 @@ console.log("Logs from your program will appear here!");
            const compressionScheme = request.split("\r\n")[2].split('Accept-Encoding: ')[1];
            if(compressionScheme.includes("gzip" ) ){
             const randomString = path.split('/echo/')[1]
-            //const  gzipEncodedData = randomString.toString("hex")
-            const encodedData = ''
-            const  gzipEncodedData = zlib.gzip(randomString,(error,buffer)=>{
+            const  gzipEncodedData = zlib.gzip(randomString).toString('hex')
+            /*const  gzipEncodedData = zlib.gzip(randomString,(error,buffer)=>{
                 if(!error){
                     console.log(buffer.toString('hex'));
-                    this.encodedData = buffer
                 }else{
                     console.log(error)
                 }
-            })
-            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: ${encodedData.length}\r\n\r\n${encodedData}`)
+            })*/
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: ${gzipEncodedData.length}\r\n\r\n${gzipEncodedData}`)
             }
            else{
               socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nbar`)
