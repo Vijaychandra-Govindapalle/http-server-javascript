@@ -30,7 +30,7 @@ console.log("Logs from your program will appear here!");
             }
         });*/
         fs.writeFileSync(`${directory}/${fileName}.txt`, fileContent,"utf-8");
-        socket.write("HTTP/1.1 201 OK\r\n\r\n")
+        socket.write("HTTP/1.1 201 Created\r\n\r\n")
 
       }
        else if(path.startsWith('/files')){ 
