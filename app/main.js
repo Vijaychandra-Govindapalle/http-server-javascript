@@ -22,7 +22,7 @@ console.log("Logs from your program will appear here!");
         const requestBody = request.split('\r\n\r\n')[1];
         const fileContent = requestBody.toString();
         const file = fileName.txt;
-        fs.mkdirSync((`${directory}/${file}`),(error)=>{
+        fs.mkdirSync((`${directory}`),(error)=>{
             if(error){
                 console.log("error")
             }
