@@ -29,7 +29,7 @@ console.log("Logs from your program will appear here!");
                 console.log("Directory successfully created")
             }
         });*/
-        fs.writeFileSync(`${directory}/${fileName}.txt`, fileContent,"utf-8");
+        fs.writeFileSync(`${directory}/${fileName}`, fileContent,"utf-8");
         socket.write("HTTP/1.1 201 Created\r\n\r\n")
 
       }
