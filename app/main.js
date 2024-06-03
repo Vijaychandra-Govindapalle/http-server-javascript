@@ -14,8 +14,8 @@ console.log("Logs from your program will appear here!");
         if(request.split("\r\n")[2].startsWith('Accept-Encoding: ')){
            const compressionScheme = request.split("\r\n")[2].split('Accept-Encoding: ')[1];
            if(compressionScheme.includes("gzip" ) ){
-            const randomString = path.split('/echo/')[1].toString('hex')
-            const  gzipEncodedData = zlib.gzipSync(randomString).toString('hex');
+            const randomString = path.split('/echo/')[1]
+            const  gzipEncodedData = zlib.gzipSync(randomString);
             /*const  gzipEncodedData = zlib.gzip(randomString,(error,buffer)=>{
                 if(!error){
                     console.log(buffer.toString('hex'));
