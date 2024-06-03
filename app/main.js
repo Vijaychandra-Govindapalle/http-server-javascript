@@ -1,5 +1,7 @@
 const net = require("net");
 const fs = require("fs")
+const zlib = require("zlib");
+const { error } = require("console");
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
 
@@ -12,7 +14,13 @@ console.log("Logs from your program will appear here!");
         if(request.split("\r\n")[2].startsWith('Accept-Encoding: ')){
            const compressionScheme = request.split("\r\n")[2].split('Accept-Encoding: ')[1];
            if(compressionScheme.includes("gzip" ) ){
-            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nfoo`)
+            const randomString = path.split('/echo/')[1]
+            const gzipEncodedData = zlib.gzip(randomString,(error)=>{
+                if(error){
+                    console.log(err);
+                }
+            })
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: ${gzipEncodedData.length}\r\n\r\n${gzipEncodedData}`)
             }
            else{
               socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nbar`)
