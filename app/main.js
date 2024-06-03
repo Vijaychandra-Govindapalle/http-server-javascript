@@ -23,7 +23,8 @@ console.log("Logs from your program will appear here!");
                     console.log(error)
                 }
             })*/
-            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: ${gzipEncodedData.length}\r\n\r\n${gzipEncodedData}`)
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: gzip\r\nContent-Type: text/plain\r\nContent-Length: ${gzipEncodedData.length}\r\n\r\n`)
+            socket.write(gzipEncodedData)
             }
            else{
               socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nbar`)
