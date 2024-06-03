@@ -10,7 +10,7 @@ console.log("Logs from your program will appear here!");
        const path = data.toString().split(" ")[1];
        if (path.startsWith('/echo')){
         if(request.split("\r\n")[2].startsWith('Accept-Encoding: ')){
-           const compressionScheme = request.split("\r\n")[3].split('')[1];
+           const compressionScheme = request.split("\r\n")[2].split('')[1];
            if(compressionScheme == "gzip" ){
             socket.write(`HTTP/1.1 200 OK\r\nContent-Encoding: ${compressionScheme}\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nfoo`)
             }
